@@ -1,0 +1,72 @@
+create database Machine
+
+create table Car
+(
+id int not null primary key,
+car nvarchar(20),
+Color nvarchar(20),
+EnginePower nvarchar(20),
+CartypeId nvarchar (20)
+)
+
+create table CarType
+(
+id int not null primary key,
+Cartype nvarchar(20)
+)
+
+
+--- insert Car
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (1, 'Toyota Camry', 'Blue', '203HP', '1')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (2, 'Honda Accord', 'Silver', '192HP', '2')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (3, 'Chevrolet Impala', 'Black', '305HP', '2')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (4, 'Ford Mustang', 'Red', '310HP', '3')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (5, 'Dodge Challenger', 'Yellow', '305HP', '3')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (6, 'Nissan Altima', 'White', '182HP', '1')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (7, 'BMW 3 Series', 'Gray', '248HP', '4')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (8, 'Mercedes-Benz C-Class', 'White', '255HP', '4')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (9, 'Audi A4', 'Black', '261HP', '4')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (10, 'Tesla Model S', 'Blue', '670HP', '5')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (11, 'Porsche Panamera', 'Red', '330HP', '5')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (12, 'Lamborghini Aventador', 'Yellow', '700HP', '6')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (13, 'Ferrari 488', 'Red', '661HP', '6')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (14, 'McLaren 720S', 'Orange', '710HP', '6')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (15, 'Acura NSX', 'Silver', '573HP', '6')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (16, 'Lexus LC 500', 'Blue', '471HP', '6')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (17, 'Toyota Supra', 'Black', '382HP', '3')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (18, 'Chevrolet Camaro', 'Red', '275HP', '3')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (19, 'Dodge Charger', 'Gray', '292HP', '3')
+insert into Car (Id, Car, Color, EnginePower, CarTypeID)
+values (20, 'Ford GT', 'Blue', '647HP', '5')
+select * from CarType
+
+
+insert into CarType (Id, CarType)
+values (1, 'Suur auto')
+insert into CarType (Id, CarType)
+values (2, 'Väike auto')
+insert into CarType (Id, CarType)
+values (3, 'Keskmine auto')
+insert into CarType (Id, CarType)
+values (4, 'minimaalne')
+insert into CarType (Id, CarType)
+values (5, 'Kõik vajalik')
