@@ -540,3 +540,7 @@ select SalesQuota, Bonus, Name
 from Sales.SalesPerson
 RIGHT JOIN Sales.SalesTerritory
 on Sales.SalesPerson.TerritoryID = Sales.SalesTerritory.TerritoryID
+--- selecti laheb mida otsid voi leida thad
+--- from-i paned esimese tabeli nime mida ühendad
+--- right join taha paned millega yhendada tahad
+--- on paned esimese tabeli nime ja selle taha . ja valge voti, paned = ja teisele poole seda kirjutad teise tabeli nime ning selle musta votme (votmed voivad teistpidi olla ei maleta)
