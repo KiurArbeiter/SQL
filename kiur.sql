@@ -810,3 +810,61 @@ select YEAR('03/31/2020') --- annab stringis oleva aastsa nr
 select DATENAME(DAY, '2023-04-11 11:53:29.856') --- annab päeva nr
 select DATENAME(WEEkDAY, '2023-04-11 11:53:29.856') --- annab stringis oleva päeva sõnana
 select DATETIME(MONTH, '2023-04-11 11:53:29.856')
+
+
+
+create function fnComputeAge(@DOB datetime)
+returns nvarchar(50)
+as begin
+	declare @tempdate datetime, @years int, @months int, @days int
+		select @tempdate = @DOB
+
+		select @years = DATEDIFF(YEAR, @tempdate, GETDATE()) - case when (MONTH(@DOB) > MONTH(GETDATE())) or (MONTH(@DOB))
+		= MONTH(GETDATE()) and DAY(@DOB) > DAY(GETDATE()) then 1 else 0 end
+		select @tempdate = DATEADD(YEAR, @years, @tempdate)
+
+		select @months = DATEDIFF(MONTH, @tempdate, GETDATE()) - case when DAY(@DOB) > DAY(GETDATE()) then 1 else 0 end
+		select @tempdate = DATEADD(MONTH, @months, @tempdate)
+
+		select @days = DATEDIFF(DAY, @tempdate, GETDATE())
+
+		declare @Age nvarchar(50)
+		set @Age = CAST(@years as nvarchar(4)) + ' Years ' + CAST(@months as nvarchar(4)) + ' Months ' + CAST(@days as nvarchar(4)) + ' Days '
+	return @Age
+end
+
+
+
+alter table Employees
+add DateOfBirth datetime
+
+--- saame vaadata kasutajate vanust
+select Id, Name, DateOfBirth, dbo.fnComputeAge(DateOfBirth) as Age from Employees
+
+-- kui kasutame seda funktsiooni siis saame teada tanse paeva vahe stringis valja toodud kuupaevaga
+select dbo.fnComputeAge('11/11/2010')
+
+
+--- nr peale dateofbirth muutujat naitab et mismoodi kuvada DOB
+select Id, Name, DateOfBirth,
+CONVERT(nvarchar, dateofbirth, 126) as convertedDOB
+from Employees
+
+select Id, Name, Name + ' - ' + CAST(Id as nvarchar) --- siin 2x name kuna mul pole second name!
+as [Name-Id] from Employees
+
+
+select CAST(GETDATE() as date) -- tanane kuupaev
+select CONVERT(date, GETDATE()) -- tanane kuupaev
+
+--- matemaatilisd funktsioonid
+select ABS(-101.5) --- ABS on absoluutväärtus arvust, ehk alati positiivne
+select CEILING(15.2) -- tagastab 16, CEILING suurendab täisarvu suunas
+select CEILING(-15.2) -- tagastab -15, ja suurendab positiivse täisarvu suunas
+select FLOOR(15.2) -- tagastab 15, suurendab täisarvu suunas
+select FLOOR(-15.2) -- tagastab -15, suurendab vaiksema täisarvu suunas
+select POWER(2, 4) -- hakkab korrutama 2*2*2*2, esimene on korrutatav number, teine on korrutaja
+select SQUARE(9) -- votab ruutu
+select SQRT(4) -- ruutjuur
+select RAND() -- annab suvalise numbri
+select FLOOR(RAND() * 100) -- korrutab 100 iga random numbri
