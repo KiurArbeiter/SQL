@@ -2095,3 +2095,75 @@ select * from Account
 
 --- igale juhtumile tuleb läheneda juhtumipõhiliselt ja
 --- mida vähem valet lugemist tuleb, seda aeglasem
+
+create table Inventory
+(
+Id int identity primary Key,
+Product nvarchar(100),
+ItemsInStock int
+)
+
+go
+create table Inventory Values ('Iphone', 10)
+select * from Inventory
+
+-- 1. käsklus
+-- 1 transaction
+begin transaction
+update Inventory set ItemsInStock = 9 where Id = 1
+--- kliendile tuleb arve
+waitfor delay '00:00:15'
+--- ebapiisav saldojääk, teeb rollbacki
+rollback transaction
+
+------------------------------------------------------------------- 2 leht
+--- 2. käsklus
+-- samal ajal tegin uue 
+-- päringuga akna, kus kohe peale esimest käivitan teise
+
+--- 2 transaction
+set tran isolation level read uncommitted
+select * from Inventory where Id = 1
+
+
+--- 3 käsklus
+--- nüüd panen selle käskluse tööle
+set tran iasolation level read uncommitted
+select * from Inventory
+where Id = 1
+------------------------------------------------ 2 leht
+
+select * from inventory
+(nolock) where Id = 1
+--- muudsin esimese käsuga 9 iphone peale, aga
+--- ikka on 10 tükki
+
+
+--- dirty read näide
+--- 1 käsklus
+
+
+---------------------------------------------------------- lol
+
+
+
+
+--- lost update probleem
+
+select * from Inventory
+
+set transaction isolation level repeatable read
+--- 1 transaction
+begin transaction
+declare @ItemsInStock int
+
+select @ItemsInStock = itemsinstock
+from Inventory where Id = 1
+
+waitfor delay '00:00:10'
+set @ItemsInStock = @ItemsInStock - 1
+update Inventory
+set ItemsInStock = @ItemsInStock where Id = 1
+
+print @itemsinstock
+commit transaction
